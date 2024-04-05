@@ -1,0 +1,48 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+    "Graph": {
+        "prefix": "graph",
+        "body": [
+            "struct Edge {",
+            "\tll e,w;",
+            "\tbool operator<(const Edge& other) const {",
+            "\t\treturn w > other.w;  // 注意这里使用 '>' 是为了实现最小堆，即 a 较小的在前",
+            "\t}",
+            "};",
+            "vector<vector<Edge>> graph;",
+            "vector<ll> dis;",
+        ]
+    },
+    "ShortPath": {
+        "prefix": "zdl",
+        "body": [
+            "priority_queue<Edge> pq;",
+            "pq.push(Edge{st, 0});",
+            "while(!pq.empty()) {",
+            "\tEdge top = pq.top();",
+            "\tpq.pop();",
+            "\tif(dis[top.e] > top.w) {",
+            "\t\tdis[top.e] = top.w;",
+            "\t\tfor(auto edge: graph[top.e]) {",
+            "\t\t\tpq.push(Edge{edge.e, edge.w + top.w});",
+            "\t\t}",
+            "\t} else {",
+            "\t\tcontinue;",
+            "\t}",
+            "}"
+        ]
+    },
+    "GraphInit": {
+        "prefix": "graphinit",
+        "body": [
+            "graph.resize(N + 5, vector<Edge>());",
+            "dis.resize(N + 5, 1e9+5);"
+        ]
+    }
+}

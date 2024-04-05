@@ -1,0 +1,40 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+    "segtree": {
+        "prefix": "segtree",
+        "body": [
+            "struct segtree {",
+            "\tvector <ll> t; ll n;",
+            "\tll op(const ll &a, const ll &b) {",
+            "\t\treturn a + b;",
+            "\t}",
+            "\tsegtree (ll tn) {",
+            "\t\tn = tn + 3;",
+            "\t\tt.resize(n * 2 + 5);",
+            "\t}",
+            "\tvoid upd (ll i, ll x) {",
+            "\t\tfor (t[i += n] = x; i > 1; i >>= 1) {",
+            "\t\t\tt[i >> 1] = op(t[i], t[i ^ 1]);",
+            "\t\t}",
+            "\t}",
+            "\tll get (ll l, ll r) {",
+            "\t\tr++;",
+            "\t\tll res = 0;",
+            "\t\tfor (l += n, r += n; l < r; l >>= 1, r >>= 1) {",
+            "\t\t\tif (l & 1)",
+            "\t\t\t\tres = op(res, t[l++]);",
+            "\t\t\tif (r & 1)",
+            "\t\t\t\tres = op(res, t[--r]);",
+            "\t\t}",
+            "\t\treturn res;",
+            "\t}",
+            "};"
+        ]
+    }
+}
