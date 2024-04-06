@@ -1,0 +1,48 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+    "manacher": {
+        "prefix": "manacher",
+        "body": [
+            "vector<ll> manacher_odd(string& s) {",
+            "\tll n = s.size();",
+            "\ts = \"\\$\" + s + \"^\";",
+            "\tvector<ll> p(n + 2);",
+            "\tll l = 1, r = 1; // cover, edges excluded",
+            "\tfor(ll i = 1; i <= n; i++) {",
+            "\t\tp[i] = max(0ll, min(r - i, p[l + (r - i)]));",
+            "\t\twhile(s[i - p[i]] == s[i + p[i]]) {",
+            "\t\t\tp[i]++;",
+            "\t\t}",
+            "\t\tif(i + p[i] > r) {",
+            "\t\t\tl = i - p[i], r = i + p[i];",
+            "\t\t}",
+            "\t}",
+            "\treturn vector<ll>(begin(p) + 1, end(p) - 1);",
+            "}",
+            "",
+            "vector<ll> manacher(string s) {",
+            "\tstring t;",
+            "\tfor(auto c: s) {",
+            "\t\tt += string(\"#\") + c;",
+            "\t}",
+            "\tt += \"#\";",
+            "\tauto res = manacher_odd(t);",
+            "\tfor(auto &x:res) x--; // withdraw influence by inserting \"#\"",
+            "\treturn vector<ll>(begin(res), end(res) - 1);",
+            "}",
+            "",
+            "bool isPalindromic(ll l, ll r, const vector<ll>&v) {",
+            "\tif(l > r) return false;",
+            "\tll mid = (r + l) - 1;",
+            "\tif(v[mid] >= r - l + 1) return true;",
+            "\telse return false;",
+            "}"
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"Combine": {
+        "prefix": "combine",
+        "body": [
+            "ll combine_all = ;",
+            "vector<ll> combine;",
+            "combine.resize(combine_all + 5);",
+            "ll combine_temp = 1;",
+            "combine[0] = 1;",
+            "rep(i, 0, combine_all) {",
+            "\tcombine_temp = combine_temp * (combine_all - i) % q * ksm(i+1,q-2) % q;",
+            "\tcombine[i + 1] = combine_temp // + combine[i];",
+            "\tcombine[i + 1] %= q;",
+            "}"
+        ]
+    }
+}
