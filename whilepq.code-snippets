@@ -20,7 +20,7 @@
         "prefix": "whilepq",
         "body": [
             "while(!pq.empty()) {",
-            "\tS top = pq.top();",
+            "\tauto top = pq.top();",
             "\tpq.pop();",
             "}"
         ]

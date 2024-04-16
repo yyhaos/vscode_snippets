@@ -6,31 +6,40 @@
 	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
 	// Placeholders with the same ids are connected.
 	// Example:
-    "Graph": {
+    "graph": {
         "prefix": "graph",
         "body": [
             "struct Edge {",
-            "\tll e,w;",
+            "\tll u,v,w;",
             "\tbool operator<(const Edge& other) const {",
             "\t\treturn w > other.w;  // 注意这里使用 '>' 是为了实现最小堆，即 a 较小的在前",
             "\t}",
             "};",
-            "vector<vector<Edge>> graph;",
-            "vector<ll> dis;",
+            "vector<vector<Edge> > graph;",
+            "vector<ll> dis, path;",
+            "vector<ll> getPath(ll ed) {",
+            "\tvector<ll> ans;",
+            "\twhile(path[ed] != 0) {",
+            "\t\tans.push_back(ed);ed = path[ed];",
+            "\t}",
+            "\tans.push_back(ed);reverse(ans.begin(), ans.end());",
+            "\treturn ans;",
+            "}"
         ]
     },
-    "ShortPath": {
+    "zdl": {
         "prefix": "zdl",
         "body": [
             "priority_queue<Edge> pq;",
-            "pq.push(Edge{st, 0});",
+            "pq.push(Edge{0,st, 0});",
             "while(!pq.empty()) {",
             "\tEdge top = pq.top();",
             "\tpq.pop();",
-            "\tif(dis[top.e] > top.w) {",
-            "\t\tdis[top.e] = top.w;",
-            "\t\tfor(auto edge: graph[top.e]) {",
-            "\t\t\tpq.push(Edge{edge.e, edge.w + top.w});",
+            "\tif(dis[top.v] > top.w) {",
+            "\t\tdis[top.v] = top.w;",
+            "\t\tpath[top.v] = top.u;",
+            "\t\tfor(auto edge: graph[top.v]) {",
+            "\t\t\tpq.push(Edge{edge.u,edge.v, edge.w + top.w});",
             "\t\t}",
             "\t} else {",
             "\t\tcontinue;",
@@ -38,11 +47,77 @@
             "}"
         ]
     },
-    "GraphInit": {
+    "graphinit": {
         "prefix": "graphinit",
         "body": [
-            "graph.resize(N + 5, vector<Edge>());",
-            "dis.resize(N + 5, 1e9+5);"
+            "graph.resize(0);",
+            "graph.resize(n + 5, vector<Edge>());",
+            "dis.resize(0);",
+            "dis.resize(n + 5, 1e9+5);",
+            "path.resize(0);",
+            "path.resize(n + 5,0);",
+            "rep(i,1,n)",
+            "{",
+            "\tll u,v,w;",
+            "\tcin>>u>>v>>w;",
+            "\tgraph[u].push_back(Edge{u,v,w});",
+            "\tgraph[v].push_back(Edge{v,u,w});",
+            "}"
+        ]
+    },
+    "diameter": {
+        "prefix": "diameter",
+        "body": [
+            "ll st = 1;",
+            "priority_queue<Edge> pq;",
+            "pq.push(Edge{0,st, 0});",
+            "while(!pq.empty()) {",
+            "\tEdge top = pq.top();",
+            "\tpq.pop();",
+            "\tif(dis[top.v] > top.w) {",
+            "\t\tdis[top.v] = top.w;",
+            "\t\tpath[top.v] = top.u;",
+            "\t\tfor(auto edge: graph[top.v]) {",
+            "\t\t\tpq.push(Edge{edge.u,edge.v, edge.w + top.w});",
+            "\t\t}",
+            "\t} else {",
+            "\t\tcontinue;",
+            "\t}",
+            "}",
+            "ll ds = 1;",
+            "rep(i,1,n) {",
+            "\tif(dis[ds] < dis[i]) {",
+            "\t\tds = i;",
+            "\t}",
+            "}",
+            "dis.resize(0);",
+            "dis.resize(n + 5, 1e9+5);",
+            "path.resize(0);",
+            "path.resize(n + 5,0);",
+            "st = ds;",
+            "while(!pq.empty()) pq.pop();",
+            "pq.push(Edge{0,st, 0});",
+            "while(!pq.empty()) {",
+            "\tEdge top = pq.top();",
+            "\tpq.pop();",
+            "\tif(dis[top.v] > top.w) {",
+            "\t\tdis[top.v] = top.w;",
+            "\t\tpath[top.v] = top.u;",
+            "\t\tfor(auto edge: graph[top.v]) {",
+            "\t\t\tpq.push(Edge{edge.u,edge.v, edge.w + top.w});",
+            "\t\t}",
+            "\t} else {",
+            "\t\tcontinue;",
+            "\t}",
+            "}",
+            "rep(i,1,n) {",
+            "\tif(dis[ds] < dis[i]) {",
+            "\t\tds = i;",
+            "\t}",
+            "}",
+            "ll dia = dis[ds];",
+            "auto pa = getPath(ds);",
+            "// st ~ ds, dia=dis[ds], pa=getPath(ds) "
         ]
     }
 }

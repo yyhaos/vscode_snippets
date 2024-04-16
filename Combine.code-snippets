@@ -20,5 +20,22 @@
             "\tcombine[i + 1] %= q;",
             "}"
         ]
+    },
+    "jie": {
+        "prefix": "jie",
+        "body": [
+            "vector<ll> jie;",
+            "#define combine_jie(n,x) ((jie[(n)] * ksm(jie[(x)],q-2) %q * ksm(jie[(n) - (x)], q-2)) % q)",
+            "//ll combine_jie_db(ll n,ll x) {return combine_jie(n,x);};",
+            "ll jie_all = ;",
+            "jie.resize(jie_all + 5);",
+            "ll jie_temp = 1;",
+            "jie[0] = 1;",
+            "rep(i, 0, jie_all) {",
+            "\tjie_temp = jie_temp * (i+1) % q;",
+            "\tjie[i + 1] = jie_temp;",
+            "\tjie[i + 1] %= q;",
+            "}"
+        ]
     }
 }
