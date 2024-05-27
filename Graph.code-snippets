@@ -50,12 +50,9 @@
     "graphinit": {
         "prefix": "graphinit",
         "body": [
-            "graph.resize(0);",
-            "graph.resize(n + 5, vector<Edge>());",
-            "dis.resize(0);",
-            "dis.resize(n + 5, 1e9+5);",
-            "path.resize(0);",
-            "path.resize(n + 5,0);",
+            "graph.assign(n + 5, vector<Edge>());",
+            "dis.assign(n + 5, 1e9+5);",
+            "path.assign(n + 5,0);",
             "rep(i,1,n)",
             "{",
             "\tll u,v,w;",
@@ -90,10 +87,8 @@
             "\t\tds = i;",
             "\t}",
             "}",
-            "dis.resize(0);",
-            "dis.resize(n + 5, 1e9+5);",
-            "path.resize(0);",
-            "path.resize(n + 5,0);",
+            "dis.assign(n + 5, 1e9+5);",
+            "path.assign(n + 5,0);",
             "st = ds;",
             "while(!pq.empty()) pq.pop();",
             "pq.push(Edge{0,st, 0});",
@@ -119,5 +114,37 @@
             "auto pa = getPath(ds);",
             "// st ~ ds, dia=dis[ds], pa=getPath(ds) "
         ]
-    }
+    },
+    "Tree": {
+        "prefix": "Tree",
+        "body": [
+            "",
+            "// Trees:  use TreeInit to init it",
+            "vector<ll> depth;",
+            "vector<ll> father;",
+            "void build(ll id, ll fa) {",
+            "\tfather[id] = fa;",
+            "\tif(fa == -1) {",
+            "\t\tdepth[id] = 0;",
+            "\t} else {",
+            "\t\tdepth[id] = depth[fa] + 1;",
+            "\t}",
+            "\tfor(auto edge: graph[id]) {",
+            "\t\tif(fa == edge.v) {",
+            "\t\t\tcontinue; // father ignored",
+            "\t\t}",
+            "\t\tbuild(edge.v, id);",
+            "\t}",
+            "}"
+        ]
+    },
+    "TreeInit": {
+        "prefix": "TreeInit",
+        "body": [
+            "\t// Tree init",
+            "\tdepth.assign(n+5,0);",
+            "\tfather.assign(n+5,-1);",
+            "\tbuild(,-1);"
+        ]
+    },
 }
